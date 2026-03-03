@@ -173,19 +173,17 @@ export default function HomePage() {
       <Navbar />
       <div className="flex-1 lg:ml-20 relative">
         <div className="absolute inset-0">
-          {mapCenter && (
-            <MapView
-              center={mapCenter}
-              zoom={mapZoom}
-              hospitals={visibleHospitals}
-              selectedHospitalId={selectedDoctor?.hospitalId}
-              userLocation={userLocation}
-              onMarkerClick={(h) => {
-                const doc = enrichedDoctors.find((d) => d.hospitalId === h.id);
-                if (doc) handleSelectDoctor(doc);
-              }}
-            />
-          )}
+          <MapView
+            center={mapCenter || [33.6938, 73.0489]}
+            zoom={mapZoom}
+            hospitals={visibleHospitals}
+            selectedHospitalId={selectedDoctor?.hospitalId}
+            userLocation={userLocation}
+            onMarkerClick={(h) => {
+              const doc = enrichedDoctors.find((d) => d.hospitalId === h.id);
+              if (doc) handleSelectDoctor(doc);
+            }}
+          />
         </div>
 
         <AnimatePresence mode="wait">
