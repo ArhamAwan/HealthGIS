@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #F4F5F0;
+  --card: #FFFFFF;
+  --primary: #0892A5;
+  --primary-light: rgba(8,146,165,0.1);
+  --text: #1A2B2B;
+  --text-secondary: #5A6B6B;
+  --text-tertiary: #8A9A9A;
+  --border: #DDE3DF;
+  --input-bg: #EFF2ED;
+  --error: #DC2626;
+  --glass-bg: rgba(255,255,255,0.6);
+  --glass-border: rgba(255,255,255,0.8);
+  --sand: #BB7E5D;
+}
+
+.dark {
+  --bg: #000000;
+  --card: #111111;
+  --primary: #0CA4A5;
+  --primary-light: rgba(12,164,165,0.15);
+  --text: #F5F5F5;
+  --text-secondary: #9CA3AF;
+  --text-tertiary: #6B7280;
+  --border: #1C1C1C;
+  --input-bg: #161616;
+  --error: #EF4444;
+  --glass-bg: rgba(0,0,0,0.65);
+  --glass-border: rgba(255,255,255,0.1);
+  --sand: #DBB68F;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: -1px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #333;
+}
