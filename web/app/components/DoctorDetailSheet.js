@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
-import { ArrowLeft, User, Briefcase, Banknote, Building2, MapPin, Clock } from 'lucide-react';
+import { ArrowLeft, User, Briefcase, Banknote, Building2, MapPin } from 'lucide-react';
 
-export default function DoctorDetailSheet({ doctor, hospital, selectedSlot, onSelectSlot, onBook, onBack }) {
+export default function DoctorDetailSheet({ doctor, hospital, onBook, onBack }) {
   if (!doctor) return null;
 
   return (
@@ -26,10 +26,9 @@ export default function DoctorDetailSheet({ doctor, hospital, selectedSlot, onSe
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-4 pr-1">
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
           <StatCard icon={<Briefcase size={16} />} label="Experience" value={`${doctor.experience} yrs`} />
           <StatCard icon={<Banknote size={16} />} label="Fee" value={`Rs ${doctor.fee}`} />
-          <StatCard icon={<Clock size={16} />} label="Slots" value={`${doctor.availableSlots?.length || 0}`} />
         </div>
 
         {hospital && (
@@ -45,26 +44,15 @@ export default function DoctorDetailSheet({ doctor, hospital, selectedSlot, onSe
           </div>
         )}
 
-        <div>
-          <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)] mb-2">Available Slots</h4>
-          <div className="flex flex-wrap gap-2">
-            {(doctor.availableSlots || []).map((slot) => (
-              <button key={slot} onClick={() => onSelectSlot(slot)}
-                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
-                  selectedSlot === slot
-                    ? 'bg-[var(--primary)] text-white'
-                    : 'bg-[var(--card)]/50 border border-[var(--border)] text-[var(--text)] hover:border-[var(--primary)]'
-                }`}>
-                {slot}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Slot selection is disabled in the simplified booking flow.
+            To restore it, re-enable the section below and pass selectedSlot/onSelectSlot props. */}
       </div>
 
-      <button onClick={onBook} disabled={!selectedSlot}
-        className="w-full h-12 mt-4 rounded-2xl bg-[var(--primary)] text-white font-semibold flex items-center justify-center transition-opacity hover:opacity-90 disabled:opacity-35">
-        Book Appointment
+      <button
+        onClick={onBook}
+        className="w-full h-12 mt-4 rounded-2xl bg-[var(--primary)] text-white font-semibold flex items-center justify-center transition-opacity hover:opacity-90"
+      >
+        Confirm Appointment
       </button>
     </motion.div>
   );

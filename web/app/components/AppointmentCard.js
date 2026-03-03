@@ -38,8 +38,8 @@ export default function AppointmentCard({ appointment }) {
             <div className="px-4 pb-4 space-y-2">
               <Row icon={<Building2 size={14} />} text={a.hospitalName} />
               <Row icon={<MapPin size={14} />} text={a.hospitalAddress} />
-              <Row icon={<Calendar size={14} />} text={a.date} />
-              <Row icon={<Clock size={14} />} text={a.timeSlot} />
+              {a.date && <Row icon={<Calendar size={14} />} text={a.date} />}
+              {a.timeSlot && <Row icon={<Clock size={14} />} text={a.timeSlot} />}
               <button onClick={handleDirections}
                 className="mt-2 flex items-center gap-2 text-xs font-semibold text-[var(--primary)] hover:underline">
                 <ExternalLink size={14} /> Get Directions

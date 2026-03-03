@@ -102,29 +102,48 @@ export default function HomePage() {
   }, [selectDoctor, hospitalMap]);
 
   const handleBook = useCallback(async () => {
-    if (!selectedDoctor || !selectedTimeSlot) return;
+    if (!selectedDoctor) return;
     const hosp = hospitalMap[selectedDoctor.hospitalId];
-    const today = new Date();
-    const dateStr = today.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    if (!hosp) return;
+
+    const createdAt = new Date().toISOString();
+    const safeDate = createdAt.slice(0, 10);
+
     const appt = {
-      id: `appt_${Date.now()}`, doctorId: selectedDoctor.id, doctorName: selectedDoctor.name,
-      specialty: selectedDoctor.specialty, hospitalId: hosp.id, hospitalName: hosp.name,
-      hospitalAddress: hosp.address, date: dateStr, timeSlot: selectedTimeSlot, status: 'Confirmed',
+      id: `appt_${Date.now()}`,
+      doctorId: selectedDoctor.id,
+      doctorName: selectedDoctor.name,
+      specialty: selectedDoctor.specialty,
+      hospitalId: hosp.id,
+      hospitalName: hosp.name,
+      hospitalAddress: hosp.address,
+      date: safeDate,
+      timeSlot: 'Any time',
+      status: 'Saved',
+      createdAt,
     };
+
     addAppointment(appt);
     const session = await supabase.auth.getSession();
     const userId = session?.data?.session?.user?.id;
     if (userId) {
       await supabase.from('appointments').insert({
-        id: appt.id, user_id: userId, doctor_id: appt.doctorId,
-        doctor_name: appt.doctorName, specialty: appt.specialty,
-        hospital_id: appt.hospitalId, hospital_name: appt.hospitalName,
-        hospital_address: appt.hospitalAddress, date: appt.date,
-        time_slot: appt.timeSlot, status: appt.status,
+        id: appt.id,
+        user_id: userId,
+        doctor_id: appt.doctorId,
+        doctor_name: appt.doctorName,
+        specialty: appt.specialty,
+        hospital_id: appt.hospitalId,
+        hospital_name: appt.hospitalName,
+        hospital_address: appt.hospitalAddress,
+        date: appt.date,
+        time_slot: appt.timeSlot,
+        status: appt.status,
       });
     }
-    router.push('/booking-confirmation');
-  }, [selectedDoctor, selectedTimeSlot, hospitalMap, addAppointment, router]);
+    resetFlow();
+    router.push('/appointments');
+  }, [selectedDoctor, hospitalMap, addAppointment, resetFlow, router]);
 
   const handleLocateMe = useCallback(() => {
     if (navigator.geolocation) {
@@ -211,9 +230,13 @@ export default function HomePage() {
               </motion.div>
             )}
             {flowStage === 'detail' && (
-              <DoctorDetailSheet key="detail" doctor={selectedDoctor} hospital={selectedDoctorHospital}
-                selectedSlot={selectedTimeSlot} onSelectSlot={selectTimeSlot}
-                onBook={handleBook} onBack={goBackToDiscovery} />
+              <DoctorDetailSheet
+                key="detail"
+                doctor={selectedDoctor}
+                hospital={selectedDoctorHospital}
+                onBook={handleBook}
+                onBack={goBackToDiscovery}
+              />
             )}
           </AnimatePresence>
         </div>

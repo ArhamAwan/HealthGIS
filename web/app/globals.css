@@ -32,6 +32,19 @@
   --sand: #DBB68F;
 }
 
+/* On small screens, make glass panels more solid so they feel like
+   proper cards instead of very transparent overlays. */
+@media (max-width: 768px) {
+  :root {
+    --glass-bg: rgba(255,255,255,0.96);
+    --glass-border: rgba(0,0,0,0.06);
+  }
+  .dark {
+    --glass-bg: rgba(17,17,17,0.96);
+    --glass-border: rgba(255,255,255,0.14);
+  }
+}
+
 * {
   box-sizing: border-box;
 }

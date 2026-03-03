@@ -94,6 +94,10 @@ export async function saveAppointment(appointment) {
     console.error('saveAppointment: no user session');
     return [];
   }
+  // Ensure we always send a non-null date to satisfy NOT NULL constraint.
+  const safeDate =
+    appointment.date ||
+    new Date().toISOString().slice(0, 10); // e.g. '2026-03-02'
   const row = {
     id: appointment.id,
     user_id: userId,
@@ -103,8 +107,10 @@ export async function saveAppointment(appointment) {
     hospital_id: appointment.hospitalId,
     hospital_name: appointment.hospitalName,
     hospital_address: appointment.hospitalAddress || '',
-    date: appointment.date,
-    time_slot: appointment.timeSlot,
+    date: safeDate,
+    // time_slot remains required in the DB schema, so we send a
+    // friendly fallback when the simplified flow doesn't capture it.
+    time_slot: appointment.timeSlot || 'Any time',
     status: appointment.status || 'Confirmed',
   };
   const { error } = await supabase.from('appointments').insert(row);
