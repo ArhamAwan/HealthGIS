@@ -1,0 +1,68 @@
+-- HealthGIS Seed Data
+-- Run this AFTER schema.sql in the Supabase SQL Editor
+
+-- Seed Hospitals
+insert into public.hospitals (id, name, address, latitude, longitude) values
+  ('h11', 'PIMS Hospital', 'G-8, Islamabad', 33.6938, 73.0489),
+  ('h12', 'Shifa International Hospital', 'H-8/4, Islamabad', 33.6870, 73.0280),
+  ('h13', 'Maroof International Hospital', 'F-10 Markaz, Islamabad', 33.6920, 73.0130),
+  ('h14', 'Ali Medical Centre', 'F-8 Markaz, Islamabad', 33.7050, 73.0190),
+  ('h15', 'Quaid-e-Azam International Hospital', 'Near Serena Hotel, Islamabad', 33.7130, 73.0910),
+  ('h16', 'KRL Hospital', 'G-9/1, Islamabad', 33.6830, 73.0400),
+  ('h17', 'Islamabad Diagnostic Centre', 'F-8/3, Islamabad', 33.7080, 73.0250),
+  ('h18', 'National Institute of Health', 'Chak Shahzad, Islamabad', 33.6640, 73.0820),
+  ('h19', 'Capital Hospital CDA', 'G-6/2, Islamabad', 33.7120, 73.0540),
+  ('h20', 'Federal Government Services Hospital', 'Pitras Bukhari Road, Islamabad', 33.7220, 73.0630),
+  ('h21', 'Holy Family Hospital', 'Satellite Town, Rawalpindi', 33.6250, 73.0710),
+  ('h22', 'Benazir Bhutto Hospital', 'Murree Road, Rawalpindi', 33.5980, 73.0530),
+  ('h1', 'Shaukat Khanum Memorial Hospital', 'Johar Town, Lahore', 31.4697, 74.2728),
+  ('h2', 'Hameed Latif Hospital', 'Canal Bank Road, Lahore', 31.5120, 74.3340),
+  ('h3', 'Doctors Hospital', 'Johar Town, Lahore', 31.4710, 74.2650),
+  ('h4', 'Ittefaq Hospital', 'Model Town, Lahore', 31.4835, 74.3201),
+  ('h5', 'National Hospital', 'DHA Phase 6, Lahore', 31.4640, 74.3780),
+  ('h6', 'Fatima Memorial Hospital', 'Shadman, Lahore', 31.5390, 74.3305),
+  ('h7', 'Jinnah Hospital', 'Allama Iqbal Medical College, Lahore', 31.5050, 74.2870),
+  ('h8', 'Punjab Institute of Cardiology', 'Jail Road, Lahore', 31.5270, 74.3400),
+  ('h9', 'Lahore General Hospital', 'Ferozepur Road, Lahore', 31.5185, 74.3050),
+  ('h10', 'Chughtai Medical Center', 'Gulberg III, Lahore', 31.5160, 74.3490)
+on conflict (id) do nothing;
+
+-- Seed Doctors
+insert into public.doctors (id, name, specialty, hospital_id, experience, fee, available_slots) values
+  ('d19', 'Dr. Amna Riaz', 'Neurologist', 'h11', 14, 3000, '["09:00 AM","11:30 AM","02:00 PM","04:30 PM"]'),
+  ('d20', 'Dr. Faisal Mahmood', 'General Medicine', 'h11', 9, 1500, '["10:00 AM","12:00 PM","03:00 PM"]'),
+  ('d21', 'Dr. Sadia Akram', 'Cardiologist', 'h12', 17, 4000, '["08:00 AM","11:00 AM","02:00 PM"]'),
+  ('d22', 'Dr. Naveed Akhtar', 'Neurologist', 'h12', 11, 2800, '["09:00 AM","01:00 PM","04:00 PM"]'),
+  ('d23', 'Dr. Huma Shahid', 'Dermatologist', 'h13', 8, 2000, '["10:00 AM","12:30 PM","03:00 PM","05:00 PM"]'),
+  ('d24', 'Dr. Asim Rafiq', 'General Medicine', 'h13', 6, 1200, '["09:00 AM","11:00 AM","02:00 PM","04:00 PM"]'),
+  ('d25', 'Dr. Samina Parveen', 'Internal Medicine', 'h14', 15, 2500, '["08:30 AM","11:00 AM","03:00 PM"]'),
+  ('d26', 'Dr. Rizwan Ul Haq', 'Cardiologist', 'h15', 20, 4500, '["09:00 AM","12:00 PM","04:00 PM"]'),
+  ('d27', 'Dr. Nosheen Fatima', 'Dermatologist', 'h16', 10, 2200, '["10:00 AM","01:00 PM","03:30 PM","05:30 PM"]'),
+  ('d28', 'Dr. Kashif Ali', 'General Medicine', 'h16', 7, 1000, '["09:00 AM","12:00 PM","03:00 PM","06:00 PM"]'),
+  ('d29', 'Dr. Bushra Naeem', 'Neurologist', 'h17', 13, 3200, '["09:30 AM","11:30 AM","02:30 PM"]'),
+  ('d30', 'Dr. Tahir Abbas', 'Internal Medicine', 'h18', 12, 2000, '["10:00 AM","01:00 PM","04:00 PM"]'),
+  ('d31', 'Dr. Saima Zafar', 'General Medicine', 'h19', 5, 800, '["09:00 AM","11:00 AM","02:00 PM","05:00 PM"]'),
+  ('d32', 'Dr. Junaid Awan', 'Cardiologist', 'h20', 16, 3500, '["08:00 AM","10:30 AM","01:00 PM","04:00 PM"]'),
+  ('d33', 'Dr. Madiha Saleem', 'Dermatologist', 'h19', 9, 1800, '["10:00 AM","12:00 PM","03:00 PM"]'),
+  ('d34', 'Dr. Arif Hussain', 'General Medicine', 'h21', 18, 1200, '["09:00 AM","11:00 AM","02:00 PM","04:00 PM"]'),
+  ('d35', 'Dr. Rubina Khatoon', 'Neurologist', 'h21', 10, 2500, '["10:00 AM","01:00 PM","04:30 PM"]'),
+  ('d36', 'Dr. Shahzad Rafi', 'Internal Medicine', 'h22', 14, 1800, '["09:00 AM","12:00 PM","03:00 PM","05:00 PM"]'),
+  ('d1', 'Dr. Ayesha Khan', 'Neurologist', 'h1', 12, 2500, '["09:00 AM","11:00 AM","02:00 PM","04:00 PM"]'),
+  ('d2', 'Dr. Ahmed Raza', 'General Medicine', 'h1', 8, 1500, '["10:00 AM","12:00 PM","03:00 PM"]'),
+  ('d3', 'Dr. Sara Malik', 'Cardiologist', 'h2', 15, 3000, '["09:00 AM","01:00 PM","05:00 PM"]'),
+  ('d4', 'Dr. Usman Ali', 'Neurologist', 'h3', 10, 2000, '["10:00 AM","12:00 PM","04:00 PM"]'),
+  ('d5', 'Dr. Fatima Noor', 'Dermatologist', 'h4', 7, 1800, '["09:00 AM","11:00 AM","02:00 PM","05:00 PM"]'),
+  ('d6', 'Dr. Bilal Hussain', 'General Medicine', 'h5', 5, 1200, '["10:00 AM","01:00 PM","03:00 PM","06:00 PM"]'),
+  ('d7', 'Dr. Zainab Sheikh', 'Internal Medicine', 'h6', 14, 2200, '["09:00 AM","12:00 PM","04:00 PM"]'),
+  ('d8', 'Dr. Hassan Tariq', 'Cardiologist', 'h8', 18, 3500, '["08:00 AM","11:00 AM","02:00 PM"]'),
+  ('d9', 'Dr. Mariam Iqbal', 'General Medicine', 'h7', 6, 1000, '["10:00 AM","12:00 PM","03:00 PM","05:00 PM"]'),
+  ('d10', 'Dr. Kamran Shah', 'Neurologist', 'h9', 11, 2300, '["09:00 AM","01:00 PM","04:00 PM"]'),
+  ('d11', 'Dr. Hina Batool', 'Dermatologist', 'h10', 9, 2000, '["10:00 AM","12:00 PM","02:00 PM","05:00 PM"]'),
+  ('d12', 'Dr. Omer Farooq', 'General Medicine', 'h3', 4, 1000, '["09:00 AM","11:00 AM","03:00 PM"]'),
+  ('d13', 'Dr. Saba Anwar', 'Internal Medicine', 'h2', 10, 2000, '["10:00 AM","01:00 PM","04:00 PM","06:00 PM"]'),
+  ('d14', 'Dr. Imran Qureshi', 'Cardiologist', 'h5', 20, 4000, '["08:00 AM","11:00 AM","03:00 PM"]'),
+  ('d15', 'Dr. Nadia Jamil', 'Neurologist', 'h6', 13, 2800, '["09:00 AM","12:00 PM","02:00 PM","05:00 PM"]'),
+  ('d16', 'Dr. Tariq Mehmood', 'General Medicine', 'h9', 16, 1500, '["10:00 AM","01:00 PM","04:00 PM"]'),
+  ('d17', 'Dr. Rabia Aslam', 'Dermatologist', 'h7', 8, 1800, '["09:00 AM","11:00 AM","02:00 PM"]'),
+  ('d18', 'Dr. Waqas Ahmad', 'Internal Medicine', 'h4', 11, 2100, '["10:00 AM","12:00 PM","03:00 PM","05:00 PM"]')
+on conflict (id) do nothing;
