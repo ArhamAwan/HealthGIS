@@ -146,14 +146,30 @@ export default function HomePage() {
   }, [selectedDoctor, hospitalMap, addAppointment, resetFlow, router]);
 
   const handleLocateMe = useCallback(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
+    const fallback = { latitude: 33.6938, longitude: 73.0489 };
+
+    if (!navigator.geolocation) {
+      setUserLocation(fallback);
+      setMapCenter([fallback.latitude, fallback.longitude]);
+      setMapZoom(13);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
         const loc = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
         setUserLocation(loc);
         setMapCenter([loc.latitude, loc.longitude]);
         setMapZoom(14);
-      });
-    }
+      },
+      () => {
+        // If permission is denied or location fails, fall back to default city
+        setUserLocation(fallback);
+        setMapCenter([fallback.latitude, fallback.longitude]);
+        setMapZoom(13);
+      },
+      { enableHighAccuracy: true, timeout: 10000 },
+    );
   }, [setUserLocation]);
 
   const handleReset = useCallback(() => {
