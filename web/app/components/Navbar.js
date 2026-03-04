@@ -78,7 +78,7 @@ export default function Navbar() {
       )}
 
       {/* Mobile bottom bar */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-[var(--border)] bg-[var(--card)]/98 backdrop-blur">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-30 border-t border-[var(--border)] bg-[var(--card)]/98 backdrop-blur">
         <div className="flex justify-around items-center h-16 max-w-md mx-auto">
           {links.map((link) => {
             const active = pathname.startsWith(link.href);

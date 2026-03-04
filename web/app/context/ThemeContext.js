@@ -12,7 +12,9 @@ export function ThemeProvider({ children }) {
     const saved = localStorage.getItem('healthgis_theme');
     if (saved === 'dark') setIsDark(true);
     else if (saved === 'light') setIsDark(false);
-    else setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    // Default to light mode on web for a consistent "white mode" experience.
+    // Users can still explicitly enable dark mode via the toggle (saved in localStorage).
+    else setIsDark(false);
     setIsReady(true);
   }, []);
 

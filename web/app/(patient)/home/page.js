@@ -25,7 +25,7 @@ export default function HomePage() {
   const { colors } = useTheme();
   const { doctors: DOCTORS, hospitals: HOSPITALS } = useData();
   const [mapCenter, setMapCenter] = useState(null);
-  const [mapZoom, setMapZoom] = useState(13);
+  const [mapZoom, setMapZoom] = useState(17);
 
   const {
     flowStage, userLocation, suggestedSpecialties, selectedSpecialty,
@@ -40,20 +40,28 @@ export default function HomePage() {
   }, [authLoading, isAuthenticated, router]);
 
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const loc = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
-          setUserLocation(loc);
-          setMapCenter([loc.latitude, loc.longitude]);
-        },
-        () => {
-          const fallback = { latitude: 33.6938, longitude: 73.0489 };
-          setUserLocation(fallback);
-          setMapCenter([fallback.latitude, fallback.longitude]);
-        }
-      );
+    if (!navigator.geolocation) {
+      const fallback = { latitude: 33.6938, longitude: 73.0489 };
+      setUserLocation(fallback);
+      setMapCenter([fallback.latitude, fallback.longitude]);
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const loc = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
+        setUserLocation(loc);
+        setMapCenter([loc.latitude, loc.longitude]);
+        setMapZoom(17);
+      },
+      () => {
+        const fallback = { latitude: 33.6938, longitude: 73.0489 };
+        setUserLocation(fallback);
+        setMapCenter([fallback.latitude, fallback.longitude]);
+        setMapZoom(13);
+      },
+      { enableHighAccuracy: true, timeout: 10000 },
+    );
   }, [setUserLocation]);
 
   const hospitalMap = useMemo(
@@ -142,7 +150,7 @@ export default function HomePage() {
       });
     }
     resetFlow();
-    router.push('/appointments');
+    router.push('/booking-confirmation');
   }, [selectedDoctor, hospitalMap, addAppointment, resetFlow, router]);
 
   const handleLocateMe = useCallback(() => {
@@ -204,15 +212,20 @@ export default function HomePage() {
 
         <AnimatePresence mode="wait">
           {flowStage !== 'home' && (
-            <motion.button key="close" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            <motion.button
+              key="close"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={handleReset}
-              className="absolute top-4 left-4 lg:left-6 z-20 w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-[var(--primary-light)] transition-colors">
-              <X size={20} className="text-[var(--text)]" />
+              className="absolute top-4 left-4 lg:top-20 lg:left-8 z-50 w-9 h-9 glass rounded-full flex items-center justify-center hover:bg-[var(--primary-light)] transition-colors"
+            >
+              <X size={18} className="text-[var(--text)]" />
             </motion.button>
           )}
         </AnimatePresence>
 
-        <div className="absolute bottom-20 lg:bottom-6 left-3 right-3 lg:left-6 lg:right-auto lg:w-[460px] xl:w-[500px] z-10">
+        <div className="absolute mobile-panel-bottom lg:bottom-6 left-3 right-3 lg:left-6 lg:right-auto lg:w-[460px] xl:w-[500px] z-40">
           <AnimatePresence mode="wait">
             {flowStage === 'home' && (
               <SymptomInput key="symptom" onSubmit={handleSymptomSubmit} onLocate={handleLocateMe} />

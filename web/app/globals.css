@@ -11,8 +11,9 @@
   --border: #DDE3DF;
   --input-bg: #EFF2ED;
   --error: #DC2626;
-  --glass-bg: rgba(255,255,255,0.6);
-  --glass-border: rgba(255,255,255,0.8);
+  /* Make glass panels feel like solid cards on desktop too */
+  --glass-bg: rgba(255,255,255,0.95);
+  --glass-border: rgba(0,0,0,0.06);
   --sand: #BB7E5D;
 }
 
@@ -27,8 +28,9 @@
   --border: #1C1C1C;
   --input-bg: #161616;
   --error: #EF4444;
-  --glass-bg: rgba(0,0,0,0.65);
-  --glass-border: rgba(255,255,255,0.1);
+  /* Dark glass is almost opaque so content is easy to read */
+  --glass-bg: rgba(0,0,0,0.95);
+  --glass-border: rgba(255,255,255,0.14);
   --sand: #DBB68F;
 }
 
@@ -54,6 +56,13 @@ body {
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   transition: background-color 0.3s, color 0.3s;
+}
+
+/* Helper for mobile safe-area aware bottom offsets (browser chrome + notch) */
+@media (max-width: 768px) {
+  .mobile-panel-bottom {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 .glass {
